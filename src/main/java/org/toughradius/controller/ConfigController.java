@@ -149,16 +149,16 @@ public class ConfigController implements Constant {
         }
 
         if(!password1.equals(password2)){
-            return new RestResult(1,"确认密码不符");
+            return new RestResult(1,"两次密码输入不一致,请重新输入");
         }
 
         String sysUserPwd = configService.getStringValue(SYSTEM_MODULE,SYSTEM_USERPWD);
 
-        if(!sysUserPwd.equals(CoderUtil.md5Salt(oldpassword))){
+        if(!sysUserPwd.equals(oldpassword)){
             return new RestResult(1,"旧密码错误");
         }
 
-        configService.updateConfig(new Config(SYSTEM_MODULE,SYSTEM_USERPWD,CoderUtil.md5Salt(password1),""));
+        configService.updateConfig(new Config(SYSTEM_MODULE,SYSTEM_USERPWD,password1,""));
 
         return new RestResult(0,"密码修改成功");
     }

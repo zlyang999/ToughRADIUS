@@ -156,6 +156,7 @@ interface rules{
 	isEmail():boolean;
 	isNotEmpty():boolean;
 	isNumber():boolean;
+	isEqual():boolean;
 }
 interface cookie{
 	clear():void;

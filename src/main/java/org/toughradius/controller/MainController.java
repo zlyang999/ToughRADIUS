@@ -127,7 +127,8 @@ public class MainController implements Constant {
                 configService.updateConfig(new Config(SYSTEM_MODULE,SYSTEM_USERPWD,sysUserPwd,""));
             }
 
-            if(username.equals(sysUserName) && CoderUtil.md5Salt(password).equals(sysUserPwd)){
+//            if(username.equals(sysUserName) && CoderUtil.md5Salt(password).equals(sysUserPwd)){
+            if(username.equals(sysUserName) && password.equals(sysUserPwd)){
                 SessionUser suser = new SessionUser(sysUserName);
                 suser.setLastLogin(DateTimeUtil.getDateTimeString());
                 session.setAttribute(SESSION_USER_KEY, suser);
@@ -137,7 +138,7 @@ public class MainController implements Constant {
             }
         } catch (Exception e) {
             logger.error("登录失败",e, Memarylogger.SYSTEM);
-            return new RestResult(1,"login failure");
+            return new RestResult(1,"登录失败");
         }
     }
 

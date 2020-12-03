@@ -6,6 +6,8 @@ webix.ready(function() {
         $$("login-verify-img").refresh();
     };
     var doLogin = function (formValues){
+        var pwd = md5(formValues.password);
+        formValues.password = pwd
         webix.ajax().post('/admin/login',formValues).then(function (result) {
             var resp = result.json();
             if (resp.code===0){
@@ -44,7 +46,7 @@ webix.ready(function() {
                                     ]
                                 },
                                 {view: "text",name:"username", value: '', placeholder: "帐 号", height:35},
-                                {view: "text", name:"password",type: 'password', value: '', placeholder: "密 码",height:35},
+                                {view: "text", name:"password",type: 'password', value: '', placeholder: "密 码",height:35,validate:webix.rules.isNotEmpty},
                                 {
                                     cols:[
                                         {view: "text",name:"verifyCode", value: '', placeholder: "请输入验证码", height:39},
@@ -66,6 +68,10 @@ webix.ready(function() {
                                             type: "form",
                                             height:39,
                                             click:function(){
+                                                if (!$$(logviewId).validate()) {
+                                                    webix.message({type: "error", text: "密码不可以为空", expire: 1000});
+                                                    return false;
+                                                }
                                                 doLogin($$(logviewId).getValues())
                                             },
                                             hotkey: "enter",

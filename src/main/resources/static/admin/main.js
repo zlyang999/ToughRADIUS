@@ -122,8 +122,21 @@ toughradius.admin.methods.updatePassword = function(hnode){
                                     webix.message({type: "error", text: "请正确填写资料", expire: 1000});
                                     return false;
                                 }
+                                debugger
+                                var oldpassword = md5($$(formid).getValues().oldpassword);
+                                var password1 = md5($$(formid).getValues().password1);
+                                var password2 = md5($$(formid).getValues().password2);
+                                var params = {
+                                    oldpassword: oldpassword,
+                                    password1: password1,
+                                    password2: password2
+                                }
+                                if (webix.rules.isNotEqual(password1,password2)){
+                                    webix.message({type: "error", text: "两次密码输入不一致,请重新输入", expire: 1000});
+                                    return false;
+                                }
                                 var btn = this;
-                                webix.ajax().post('/admin/password', $$(formid).getValues()).then(function (result) {
+                                webix.ajax().post('/admin/password', params).then(function (result) {
                                     btn.enable();
                                     var resp = result.json();
                                     console.log(resp);
