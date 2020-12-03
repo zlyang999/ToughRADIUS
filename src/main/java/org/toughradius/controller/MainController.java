@@ -123,8 +123,7 @@ public class MainController implements Constant {
                 configService.updateConfig(new Config(SYSTEM_MODULE,SYSTEM_USERNAME,sysUserName,""));
             }
             if(ValidateUtil.isEmpty(sysUserPwd)){
-                sysUserPwd = CoderUtil.md5Salt("root");
-                configService.updateConfig(new Config(SYSTEM_MODULE,SYSTEM_USERPWD,sysUserPwd,""));
+                configService.updateConfig(new Config(SYSTEM_MODULE,SYSTEM_USERPWD,password,""));
             }
 
 //            if(username.equals(sysUserName) && CoderUtil.md5Salt(password).equals(sysUserPwd)){
